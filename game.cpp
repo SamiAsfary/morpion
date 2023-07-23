@@ -20,7 +20,17 @@ void Game::run(){
     cout << "Player 1 :" << this->playerList[0].playerName << endl;
     cout << "Player 2 :" << this->playerList[1].playerName << endl;
 
-    this->display();
+    for(;;){
+        this->display();
+        this->newTurn();
+        if(this->winCheck()){
+            this->display();
+            cout << "The winner is " << this->playerList[this->playingNow].playerName << "." << endl;
+            break;
+        }
+        this->playingNow = (this->playingNow+1)%2;
+    }
+    
 }
 
 void Game::display(){
@@ -33,5 +43,39 @@ void Game::display(){
         cout << "|" << endl;
         cout << "+-+-+-+" << endl;
     }
-    cout << "Current player : " << this->playerList[this->playingNow].playerName;
+}
+
+void Game::newTurn(){
+    int index;
+    cout << "It's " << this->playerList[this->playingNow].playerName << "'s turn." << endl;
+    cout << "type the index of were you want to place your symbol : ";
+    cin >> index;
+    this->board[index] = this->playerList[this->playingNow].playerSymbol;
+}
+
+bool Game::winCheck(){
+    int i;
+    for(i = 0; i<9;i+=3){
+        if(this->board[i] != ' '){
+            if(this->board[i] == this->board[i+1] && this->board[i] == this->board[i+2]){
+                return true;
+            }
+        }
+    }
+
+    for(i = 0; i<3;i+=1){
+        if(this->board[i] != ' '){
+            if(this->board[i] == this->board[i+3] && this->board[i] == this->board[i+6]){
+                return true;
+            }
+        }
+    }
+
+    if(this->board[4] != ' '){
+        if((this->board[4] == this->board[0] && this->board[4] == this->board[8]) || (this->board[4] == this->board[2] && this->board[4] == this->board[6])){
+            return true;
+        }
+    }
+
+    return false;
 }

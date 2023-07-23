@@ -13,12 +13,13 @@ class Game{
         
     private:
         bool winCheck();
+        void newTurn();
         void display();
-        
+
         Player playerList[2];
-        bool playingNow = 0;
+        char playingNow = 0;
         unsigned char round[2];
-        char board[9] = {'1','2','3','4','5','6','X',' ','O'};
+        char board[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
 };
 
 
