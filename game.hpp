@@ -1,5 +1,5 @@
-#ifndef HPP_GAME_INC
-#define HPP_GAME_INC 1
+#ifndef INC_GAME_HPP
+#define INC_GAME_HPP 1
 
 #include <string>
 #include "player.hpp"
@@ -15,7 +15,8 @@ class Game{
         bool winCheck();
         void newTurn();
         void display();
-
+        void greeting();
+        
         Player playerList[2];
         char playingNow = 0;
         unsigned char round[2];

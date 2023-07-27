@@ -19,7 +19,7 @@ Game::Game(Player player0, Player player1){
 void Game::run(){
     cout << "Player 1 :" << this->playerList[0].playerName << endl;
     cout << "Player 2 :" << this->playerList[1].playerName << endl;
-
+    this->greeting();
     for(;;){
         this->display();
         this->newTurn();
@@ -31,6 +31,20 @@ void Game::run(){
         this->playingNow = (this->playingNow+1)%2;
     }
     
+}
+
+void Game::greeting(){
+    cout << "Greeting to you " << this->playerList[0].playerName << " and to you too " << this->playerList[1].playerName << endl;
+    cout << "Each round you will select the index where you want to put your symbol on the board. The index are as follow :" << endl;
+    cout << "+-+-+-+" << endl;
+    for(int i = 0;i < 3;i++){
+        for(int j = 0;j < 3;j++){
+            cout << "|" << i*3+j;
+        }
+        cout << "|" << endl;
+        cout << "+-+-+-+" << endl;
+    }
+    cout << endl;
 }
 
 void Game::display(){
@@ -46,11 +60,17 @@ void Game::display(){
 }
 
 void Game::newTurn(){
-    int index;
+    unsigned int index;
     cout << "It's " << this->playerList[this->playingNow].playerName << "'s turn." << endl;
-    cout << "type the index of were you want to place your symbol : ";
+    cout << "Type the index of were you want to place your symbol : ";
     cin >> index;
+    while(this->board[index] != ' ' || index > 8){
+        cout << "You cannot choose to replace the other player symbol nor the index can be >8." << endl;
+        cout << "Type the index of were you want to place your symbol : ";
+        cin >> index;
+    }
     this->board[index] = this->playerList[this->playingNow].playerSymbol;
+
 }
 
 bool Game::winCheck(){

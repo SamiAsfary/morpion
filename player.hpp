@@ -1,5 +1,5 @@
-#ifndef HPP_PLAYER_INC
-#define HPP_PLAYER_INC 1
+#ifndef INC_PLAYER_HPP
+#define INC_PLAYER_HPP 1
 
 #include <string>
 using namespace std;
