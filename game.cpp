@@ -1,5 +1,7 @@
 #include "game.hpp"
 #include <iostream>
+#include<ios> //used to get stream size
+#include<limits> //used to get numeric limits
 using namespace std;
 
 Game::Game(){
@@ -61,10 +63,15 @@ void Game::display(){
 
 void Game::newTurn(){
     unsigned int index;
+    bool cinFail = 0;
     cout << "It's " << this->playerList[this->playingNow].playerName << "'s turn." << endl;
     cout << "Type the index of were you want to place your symbol : ";
     cin >> index;
-    while(this->board[index] != ' ' || index > 8){
+    while(this->board[index] != ' ' || index > 8 || (cinFail=cin.fail())){
+        if(cinFail ){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
         cout << "You cannot choose to replace the other player symbol nor the index can be >8." << endl;
         cout << "Type the index of were you want to place your symbol : ";
         cin >> index;
