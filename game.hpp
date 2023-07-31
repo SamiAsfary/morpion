@@ -16,10 +16,14 @@ class Game{
         void newTurn();
         void display();
         void greeting();
+        bool newRound();
+        bool fullBoard();
+        void resetBoard();
         
         Player playerList[2];
         char playingNow = 0;
-        unsigned char round[2];
+        char boardFullness = 0;
+        unsigned int round[3] = {0,0,0};
         char board[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
 };
 

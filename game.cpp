@@ -14,8 +14,6 @@ Game::Game(Player player0, Player player1){
     this->playerList[0] = player0;
     this->playerList[1] = player1;
     this->playingNow = 0;
-    this->round[0] = 0;
-    this->round[1] = 0;
 }
 
 void Game::run(){
@@ -25,10 +23,19 @@ void Game::run(){
     for(;;){
         this->display();
         this->newTurn();
-        if(this->winCheck()){
+        if(this->winCheck() || boardFullness >= 9){
             this->display();
-            cout << "The winner is " << this->playerList[this->playingNow].playerName << "." << endl;
-            break;
+            if(boardFullness < 9){
+                cout << "The winner is " << this->playerList[this->playingNow].playerName << "." << endl;
+                this->round[this->playingNow]++;
+            }else{
+                cout << "There is no winner this round" << endl;
+                this->round[2]++;
+            }
+            if(!this->newRound()){
+                break;
+            }
+            this->resetBoard();
         }
         this->playingNow = (this->playingNow+1)%2;
     }
@@ -63,12 +70,11 @@ void Game::display(){
 
 void Game::newTurn(){
     unsigned int index;
-    bool cinFail = 0;
     cout << "It's " << this->playerList[this->playingNow].playerName << "'s turn." << endl;
     cout << "Type the index of were you want to place your symbol : ";
     cin >> index;
-    while(this->board[index] != ' ' || index > 8 || (cinFail=cin.fail())){
-        if(cinFail ){
+    while(this->board[index] != ' ' || index > 8 || cin.fail()){
+        if(cin.fail()){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         }
@@ -77,7 +83,7 @@ void Game::newTurn(){
         cin >> index;
     }
     this->board[index] = this->playerList[this->playingNow].playerSymbol;
-
+    this->boardFullness++;
 }
 
 bool Game::winCheck(){
@@ -105,4 +111,25 @@ bool Game::winCheck(){
     }
 
     return false;
+}
+
+bool Game::newRound(){
+    char askContinue = 0;
+    cout << "Current Score :" << endl;
+    cout << this->playerList[0].playerName << " : " << this->round[0] << endl;
+    cout << this->playerList[1].playerName << " : " << this->round[1] << endl;
+    cout << "Draw : " << this->round[2] << endl;
+    do{
+    cout << "Continue playing (y/n) : ";
+    cin >> askContinue;
+    }while(askContinue != 'y' && askContinue != 'n');
+    return askContinue == 'y' ? true : false;
+
+}
+
+void Game::resetBoard(){
+    for(int i = 0; i < 9; i++){
+        this->board[i] = ' ';
+    }
+    boardFullness = 0;
 }
