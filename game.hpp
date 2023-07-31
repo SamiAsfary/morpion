@@ -21,8 +21,8 @@ class Game{
         void resetBoard();
         
         Player playerList[2];
-        char playingNow = 0;
-        char boardFullness = 0;
+        unsigned char playingNow = 0;
+        unsigned char boardFullness = 0;
         unsigned int round[3] = {0,0,0};
         char board[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
 };

@@ -69,11 +69,11 @@ void Game::display(){
 }
 
 void Game::newTurn(){
-    unsigned int index;
+    int index;
     cout << "It's " << this->playerList[this->playingNow].playerName << "'s turn." << endl;
     cout << "Type the index of were you want to place your symbol : ";
     cin >> index;
-    while(this->board[index] != ' ' || index > 8 || cin.fail()){
+    while(this->board[index] != ' ' || index < 0 || index > 8 || cin.fail()){
         if(cin.fail()){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
